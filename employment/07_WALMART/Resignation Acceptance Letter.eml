@@ -1,0 +1,435 @@
+Received: from CH8P100MB0896.NAMP100.PROD.OUTLOOK.COM (2603:10b6:610:25f::13)
+ by DS0P100MB0881.NAMP100.PROD.OUTLOOK.COM with HTTPS; Sat, 24 May 2025
+ 19:14:50 +0000
+Received: from DS2PEPF00004554.namprd21.prod.outlook.com
+ (2603:10b6:f:fc00::516) by CH8P100MB0896.NAMP100.PROD.OUTLOOK.COM
+ (2603:10b6:610:25f::13) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.24; Sat, 24 May
+ 2025 19:14:48 +0000
+Received: from DS1PEPF00017096.namprd05.prod.outlook.com
+ (2603:10b6:2c:400:0:1007:0:4) by DS2PEPF00004554.outlook.office365.com
+ (2603:10b6:f:fc00::516) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8792.9 via Frontend Transport; Sat,
+ 24 May 2025 19:14:48 +0000
+Authentication-Results: spf=pass (sender IP is 209.177.169.161)
+ smtp.mailfrom=myworkday.com; dkim=fail (body hash did not verify)
+ header.d=myworkday.com;dmarc=pass action=none
+ header.from=myworkday.com;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of myworkday.com designates
+ 209.177.169.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=209.177.169.161; helo=wd5-az-prod-mail-nat.myworkday.com; pr=C
+Received: from webmail.wal-mart.com (161.168.138.160) by
+ DS1PEPF00017096.mail.protection.outlook.com (10.167.18.100) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8769.18 via Frontend Transport; Sat, 24 May 2025 19:14:48 +0000
+Received: from phont300ndcus3.homeoffice.Wal-Mart.com (10.120.14.29) by
+ phont301ndcus1.homeoffice.Wal-Mart.com (10.120.14.31) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Sat, 24 May 2025 14:14:46 -0500
+Received: from feps-mail-c5.wal-mart.com (172.26.45.89) by
+ phont300ndcus3.homeoffice.Wal-Mart.com (10.120.14.29) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11 via Frontend Transport; Sat, 24 May 2025 14:14:46 -0500
+Received: by feps-mail-c5.wal-mart.com (Postfix, from userid 600)
+	id 4b4WtX30HTzRSYgZ; Sat, 24 May 2025 19:14:16 +0000 (UTC)
+Received: from pps-mail-c2.wal-mart.com (unknown [161.167.229.195])
+	by feps-mail-c5.wal-mart.com (Postfix) with ESMTP id 4b4Wss2y6jzRSYLM
+	for <Ritam.Mukherjee@walmart.com>; Sat, 24 May 2025 19:14:09 +0000 (UTC)
+Received: from pps.filterd (pps-mail-c2.wal-mart.com [127.0.0.1])
+	by pps-mail-c2.wal-mart.com (8.18.1.2/8.18.1.2) with ESMTP id 54OHmoQf003085
+	for <Ritam.Mukherjee@walmart.com>; Sat, 24 May 2025 14:14:09 -0500
+Authentication-Results-Original: wal-mart.com;	spf=pass
+ smtp.mailfrom=walmart@myworkday.com;	dkim=fail header.d=myworkday.com
+ header.s=0s07k1p5;	dmarc=pass header.from=myworkday.com
+Received: from mx0a-000c7201.pphosted.com (mx0a-000c7201.pphosted.com [67.231.144.101])
+	by pps-mail-c2.wal-mart.com (PPS) with ESMTPS id 46rwkshch0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <Ritam.Mukherjee@walmart.com>; Sat, 24 May 2025 14:14:09 -0500 (CDT)
+Received: from pps.filterd (m0132701.ppops.net [127.0.0.1])
+	by mx0a-000c7201.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54OHrEWa008374
+	for <Ritam.Mukherjee@walmart.com>; Sat, 24 May 2025 14:14:08 -0500
+Authentication-Results-Original: walmart.com;	dkim=pass header.d=myworkday.com
+ header.s=0s07k1p5;	spf=pass smtp.mailfrom=walmart@myworkday.com;	dmarc=pass
+ header.from=myworkday.com
+Received: from wd5-az-prod-mail-nat.myworkday.com (wd5-az-prod-mail-nat.myworkday.com [209.177.169.161])
+	by mx0a-000c7201.pphosted.com (PPS) with ESMTPS id 46ub1dna4x-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <Ritam.Mukherjee@walmart.com>; Sat, 24 May 2025 14:14:08 -0500 (CDT)
+Received: from wire-prod-6vnx9dzc.prod-wire.pr502.cust.pdx.wd (localhost [127.0.0.1])
+	by wire-prod-6vnx9dzc.prod-wire.pr502.cust.pdx.wd (Postfix) with ESMTP id 9D9CD1804EED
+	for <Ritam.Mukherjee@walmart.com>; Sat, 24 May 2025 19:14:07 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 wd5-az-prod-mail-nat.myworkday.com B41D8A04E
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=myworkday.com;
+	s=0s07k1p5; t=1748114047;
+	bh=gazzoJw1FixPXuWGaghOdBMjLCAWlBBdnSr2nTq5Bvw=;
+	h=Date:From:Reply-To:To:Subject:From;
+	b=l7L/6yH0SYdIWcGAO0gpfMVtZufImjfN5FAJzELm8xzkzIKSq+aBdn9agrjJ79Cs7
+	 LoDn3aP8G2UaLvFSg8LAt4zTniHkyRDDC6KJ4gyiEw1q8RkHlPE5n0uXnO5uKycl9q
+	 bvblu0VyKL+PUtIPhxJ1xked6z5tyqIxd6q+RnJQ=
+Date: Sat, 24 May 2025 12:14:07 -0700 (PDT)
+X-MSH: v 0.5.6
+From: walmart@myworkday.com
+Reply-To: walmart@myworkday.com
+To: Ritam.Mukherjee@walmart.com
+Message-ID: <1642906368.429565.1748114047644@myworkday.com>
+Subject: Resignation Acceptance Letter
+Content-Type: multipart/mixed;
+	boundary="----=_Part_429563_1059237549.1748114047644"
+X-Workday-Security: false
+X-Workday-Static-BP-Address: false
+Feedback-ID: walmart:a2b194bb781910000476d4558ec20013:000:workday
+X-Workday-System: false
+X-Authority-Analysis: v=2.4 cv=RMuzH5i+ c=1 sm=1 tr=0 ts=68321a80 b=1 cx=c_pps a=UwgItc1FBzrnWbTMCBSeKg==:117 a=UwgItc1FBzrnWbTMCBSeKg==:17 a=dt9VzEwgFbYA:10 a=NQcj25q2HTMA:10 a=l4ASmbD6ZxoA:10 a=0NS-x_NrAAAA:8 a=y5Rj0mRZAAAA:8 a=BqL_6HfOZFs4vAzymYAA:9
+ a=K8urYjA1vUUO-GH7:21 a=gKO2Hq4RSVkA:10 a=frz4AuCg-hUA:10 a=_W_S_7VecoQA:10 a=lqcHg5cX4UMA:10 a=QEXdDO2ut3YA:10 a=qZCY-7RN7FupvlLqHVIA:9 a=1Vq_FK4TplAA:10 cc=ntf awl=host:23638
+X-Proofpoint-SPF-Result: pass
+X-Proofpoint-SPF-Record: v=spf1 include:spf1.myworkday.com include:spf2.myworkday.com
+ include:spf-001ee601.pphosted.com include:spf.protection.outlook.com -all
+X-Proofpoint-Virus-Version: vendor=nai engine=6800 definitions=11443 signatures=596817
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 adultscore=0 impostorscore=0
+ malwarescore=0 suspectscore=0 bulkscore=0 priorityscore=350
+ lowpriorityscore=0 spamscore=0 phishscore=0 clxscore=596 classifier=
+ authscore=0 authtc= authcc=notification route=inbound adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2505160000 definitions=main-2505240177
+ domainage_hfrom=7553 domainage_replyto=7553
+X-CLX-Shades: MLX
+X-Proofpoint-ORIG-GUID: -MZsOyT7nFXT0qHTyPwdif9AZh6Ix10j
+X-Proofpoint-GUID: -MZsOyT7nFXT0qHTyPwdif9AZh6Ix10j
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI0MDE3OCBTYWx0ZWRfX8i9+ljy+kDMv 2D4YlKZVeRMRWL/A5iThA2qJJiSuQMbeGoY1P3nQDf3FvuVHtpSVl41I1XwqzdnI+k5lB+sW3f7 W+pFZeqHpYZ5wAF1ro9NOyhB25g9OAUAVJ8V3wKKoVzZjRxwzp/bYpf8V6piEzZaWctXnkYVsVe
+ 5y+MtaGmdcGOOi98a8YfXhSk6qV51R5PrL6H24czlgdKd5TPzkP10vKOLsWJbIhKjs8cxdT+ZQ8 WuGBtEHT1HQMDkuiw5nLLpCqpIqsg1l3mKFhe+DiaxrzDNLXQTZFpPLMBkAYxb6U6c5+tMEUip+ 7y6fkGAu2CaY+U6aMv3q/9SDDY7V2RfRgcCwKfE/OixiYeMmzQbminxaZxluwMu6mGJA6VnDnV1
+ ka+ac8FQWXLlSLUQj6VSvagXGj7ZvHpgsSdtiHsIEbyaXdZ4WuY=
+X-CLX-Response: 1TFkXHxMfEQpMehcYGBkRCllEF2N9Eh0FTBhmXFNmEQpYWBduHEEBWB14XV5 HbhEKeE4XYxNEXmJPfnNcbxwRCnhLF24cQQFYHXhdXkduEQp5TBdkfGBveHodYEBLbxEKQ0gXBx kRCkNZFwcZHxgRCkNJFxoEGhoaEQpZTRdnZnIRCllJFxpxGhAadwYeHx9xGR8SHB8QGncGGBoGG
+ xgaEQpZXhdobnkRCklGF11LRkdLWF51RVpaWEVOB0lOSREKSUcXeE9NEQpDThcHZ3BZZVN+HURs cn4aW2J+U3pdTkNME2twQhxjUhsaQBEKWFwXHwQaBBkTEgUbGgQbGhoEGxkeBBkZEBseGh8aEQp eWRdMcB0SSREKTVwXHBsZEQpMWhdpa2lNTU0RCkVZF29raxEKTEYXY2tra2trEQpCTxdkRkVwc0
+ VYYnB9HxEKQ1oXGBoTBBsdHQQbHBMEGxwbEQpCXhcbEQpZRRcTEQpFSRcbEQpFZhceEQpCXBcaE QpCRRduHEEBWB14XV5HbhEKQk4XYxNEXmJPfnNcbxwRCkJMF24cQQFYHXhdXkduEQpCbBduHEEB WB14XV5HbhEKQkAXYG4bEgFCeG1sBWQRCkJYF2sYEn4eZH8ZcFxgEQpaWBcTEQp5Qxdhfn1Le35
+ eHnoYThEKWUsXHR8fGREKWksXHR8fGREKcGgXZUMFRhNeQ09eGlsQGBobEQpwaBdrTxJfGGNSen BoWBAbExwRCnBoF2JFZBt+Wn5NaXx+EBoRCnBoF2VNSVNgQV9paF14EBoRCnBoF2sBZ0xaXW1TH HhgEBsSHREKcGgXaxhMchtZGhhQZUYQGhEKcGgXYnxrU0R/AWVAUHsQGhEKcGgXb0EdaEZLXmNT
+ ZlkQGhEKcH0XblxpTmkbAUFveXkQGhEKcH0XY05haHAZQBp9Wx0QGhEKcH0XZ21HXHt+ZB8ZQkk QGxoZEQpwYxdifV5tYhNbQFxrGBASGBEKcH8XYWZvWxpnZEJIHVsQGxoSEQpwXxdjYhJQSGN4H3 xCfRATGxEKcH8XbHtccGRheR5HRHgQGB0RCnBfF2dtR1x7fmQfGUJJEBsaGREKbX4XGhEKWE0XS xEg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-24_06,2025-05-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0 clxscore=595
+ suspectscore=0 spamscore=0 bulkscore=0 adultscore=0 impostorscore=0
+ lowpriorityscore=0 mlxlogscore=932 mlxscore=0 phishscore=0
+ priorityscore=223 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505160000 definitions=main-2505240178 domainage_hfrom=7553
+ domainage_replyto=7553
+Return-Path: walmart@myworkday.com
+X-OrganizationHeadersPreserved: phont301ndcus1.homeoffice.Wal-Mart.com
+X-MS-Exchange-Organization-ExpirationStartTime: 24 May 2025 19:14:48.7796
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: aae3e7be-f1fb-4e52-39ca-08dd9af74098
+X-EOPAttributedMessage: 0
+X-MS-Exchange-Organization-MessageDirectionality: Originating
+X-MS-Exchange-SkipListedInternetSender: ip=[209.177.169.161];domain=wd5-az-prod-mail-nat.myworkday.com
+X-MS-Exchange-ExternalOriginalInternetSender: ip=[209.177.169.161];domain=wd5-az-prod-mail-nat.myworkday.com
+X-CrossPremisesHeadersPromoted: DS1PEPF00017096.namprd05.prod.outlook.com
+X-CrossPremisesHeadersFiltered: DS1PEPF00017096.namprd05.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS1PEPF00017096:EE_|CH8P100MB0896:EE_|DS0P100MB0881:EE_
+X-MS-Exchange-Organization-AuthSource: phont300ndcus3.homeoffice.Wal-Mart.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-OriginatorOrg: walmart.onmicrosoft.com
+X-MS-Office365-Filtering-Correlation-Id: aae3e7be-f1fb-4e52-39ca-08dd9af74098
+X-MS-Exchange-Organization-SCL: -1
+X-ERT: Bypass spam filtering for authenticated sender 'myworkday.com'
+X-Microsoft-Antispam: BCL:2;ARA:13230040|82310400026|12012899012|5062899012|2092899012|3072899012|4053099003|8096899003|13003099007|4076899003|7053199007;
+X-Forefront-Antispam-Report: CIP:161.168.138.160;CTRY:US;LANG:en;SCL:-1;SRV:;IPV:NLI;SFV:SFE;H:wd5-az-prod-mail-nat.myworkday.com;PTR:wd5-az-prod-mail-nat.myworkday.com;CAT:NONE;SFS:(13230040)(82310400026)(12012899012)(5062899012)(2092899012)(3072899012)(4053099003)(8096899003)(13003099007)(4076899003)(7053199007);DIR:INB;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 May 2025 19:14:48.7016
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: aae3e7be-f1fb-4e52-39ca-08dd9af74098
+X-MS-Exchange-CrossTenant-Id: 3cbcc3d3-094d-4006-9849-0d11d61f484d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3cbcc3d3-094d-4006-9849-0d11d61f484d;Ip=[161.168.138.160];Helo=[webmail.wal-mart.com]
+X-MS-Exchange-CrossTenant-AuthSource: phont300ndcus3.homeoffice.Wal-Mart.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH8P100MB0896
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.0340533
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.8769.014
+X-Microsoft-Antispam-Mailbox-Delivery:
+	wl:1;pcwl:1;ucf:1;jmr:0;auth:0;dest:C;OFR:CustomRules;ENG:(910005)(944506478)(944626604)(920097)(811242)(255002)(410001)(930097)(140003);
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?c0NEcGlIdXBMZDVqTDQ3M1ZDcU41TFFOUFpSQkFJZEQ2ckQ1VVhmVUs3aUg5?=
+ =?utf-8?B?NG95N2VlUjNNQWdkZWlwaktLRlhIWjJiWDNlUDNxTDgyZ3BkakIweEVlU0pm?=
+ =?utf-8?B?Nml2UmprT0N1QU1kZ1RQUGczVzRNZVJZWklaaDhPeGEwQW42aEhYeE5SSDV0?=
+ =?utf-8?B?MmR3RG5CSkdyU0o4TEFsSWUycWR0TVJPR2dQTnp1V1dZUU9lV0YrRERBdVBT?=
+ =?utf-8?B?YnhUc1VYQ0FVQWdvVVNYUEJNZEtFNGRaNi9SMERUbytSZmZHcmJuREw4WGIw?=
+ =?utf-8?B?Rnl0SElGN1ZreWcvS2psbkxFbnpQcnJ4UzJhOGtKU3E0T1lnTE82Q1RnQytR?=
+ =?utf-8?B?S211OENhcXozaSsyc3RCUEZrUU9zZy9Ka0NPTlpUSTRheUpjVHBQWi9DblVM?=
+ =?utf-8?B?RGZhQ3FQcXR5UWNuZlJydjJOMGFnNXArdDZlSHZUVnQydzlTdC9WblY0Y0JQ?=
+ =?utf-8?B?d1JSWlNCZXg1S29yQ3FxQ0xWZXJ0d0hnYXlXL3dvRjlaU0VoOFR6b2QwUDVM?=
+ =?utf-8?B?ck5sL09lM2lSdHYxTlNKUm1IRFlibHNRQ25ER3FLbG5ITFhFSVprNlhwc1Uv?=
+ =?utf-8?B?SzVoWXU1ditMNG85V0JMR3E4ZkFuRTErbTQ0WFBRYVJWTUxpVkZQcXY4dWIy?=
+ =?utf-8?B?cXNXWHU3Q0x0RnhaSDJlT0QzNTdOenpSQzNIMXl2MFZTU1BqbHVsQ3UrR01R?=
+ =?utf-8?B?MHVaVkNtbjB0RVVKRDZYaFRxa1Q0RjVMQ3pnUjM1M1A2U0dUQlhWM0VvWVBk?=
+ =?utf-8?B?TmEydWh2VlVNc2c4TmJXQ0I5UVRsNU9jYjJDTWExdzNwNnQ4SHZCU2kwUWM1?=
+ =?utf-8?B?T1JncGlnNlZob0RkdTVLc2lLTkJabW54RTRIRkFkdkJXV2RaTG1EUElBRWRz?=
+ =?utf-8?B?U3N2eWJkYjlhMUg4VmdzelFkd0EyeFFucW0rc3lGVHBTR2V0NDBhbkt1QWM0?=
+ =?utf-8?B?Y0JFVXd3K25KSG9menVNbnNaRk1NRE1kU2hRNTBnZEE3VmtZbS9yLzR5Qzli?=
+ =?utf-8?B?eWpiZXYvUjhNNmxVeUV2ZGVyWUljaUdaRnZIalhyYVNRbXNvL0ZQbkVBQ1lI?=
+ =?utf-8?B?QWRrWDR4WkllMndJd2ZLUmhTNUhXLzVXY0JjYVd2S2psa3NQQ1lNRUVxM29V?=
+ =?utf-8?B?bEVaWmtvVUlYL2xRWVVZWFRvQU8xS2hiS2dvQ1VwRXFCYUVveVVsSFpCNzJ4?=
+ =?utf-8?B?QTdpV0xMSE1Ec21GOVJ6TGUyeEhDZ2ZQN1BaQXlaUjlZR2N2SkxoQ2taQU51?=
+ =?utf-8?B?S1AxSGtHcXVwOThQa3NvaURMTVBNMTNoZy8zY3cwMThscDN1eUhjTFFXWUI2?=
+ =?utf-8?B?anh2QUtJTDFxaHAvOE95OHBubEhIZDhKUnpxeEJUUWl0M1BwMDdrbE94WTlW?=
+ =?utf-8?B?UU5RY05KbWp3d0dETHRrODRXaERGUTA5V3RlWkNVdUs5d1FnUHVnMlRYSk42?=
+ =?utf-8?B?cWZWQktpcEtMNzFFUDlBakdNeHh5VTlXSzczTG1HQVc1S2V4MUx2aXB6bmNm?=
+ =?utf-8?B?MnpGaDgxU0RvbnpxVXRzcUxTWWRvclNzMk11R0grb3pmWDBGRE92enp2TlZp?=
+ =?utf-8?B?b0l6dExEV1g3RlZ0ZTVVUzVlb2hFV3l2Nm9YaElLZnN3TE1sTWhHR3FpeE9k?=
+ =?utf-8?B?UHZVWGV4ZWRlRXRFT3IrL2ZhVmNBVU1rMktvbGpjVzYrd3JBNnhOVFhjdzYz?=
+ =?utf-8?B?dFNwVlBuazNVRDRaTk5qSU9OVk5LeWRxSE9FK3RyNEZ0ajZRVTZSWkZLZyta?=
+ =?utf-8?B?SUlxanl6MWNUWXhkZjRSZHBwN0RTbmZuZUNycWFpWHNkeE9veENEUERqK3gz?=
+ =?utf-8?B?b1kweUFUb3pQOEFQVTZ3dXMxNCt5VElsaXh0cHlXTGJHZ3J0M0cvNldIN0p0?=
+ =?utf-8?B?aW5QNTVOLzZIM1E5aEVOYWtScTNZWXFKZFpZMmRrSXZKd3o4d0lWTjJ1Tmxt?=
+ =?utf-8?B?SE13bzdQejQxQXZEVFUyYXJ3NUhlejZzMndoemU3ZjJhaElCbTI5Vk50eEJz?=
+ =?utf-8?B?SEQyL1RIUVo2dEV4Z3FpVG84S1VyajlmTmFVK2J5eUxLci9DR1JVQzRFajJq?=
+ =?utf-8?B?U3JOSm5zaXc2VXlpWnE1ZUtoOEVJSVF4TlA4aEoyaWdLZWx6SWU4LzYrZ1FI?=
+ =?utf-8?B?MEMrV0hPdU1vNGpTczUrbVRTU3kxTjBnekhTc1c1SU56K1Y3YmpmclVoWnhB?=
+ =?utf-8?B?TzgrSVJ1K2NPRDNrQnlHTzRFditianZ6UGI2L3Brc0pvZDJrc1QrUkRCbVE5?=
+ =?utf-8?B?dmxqQmJIVTFPcUkrcFMrdzNZL01VSWM5YytPR2xBL0UzOUVOT3E1VGg0WWVH?=
+ =?utf-8?B?SXNhNVNrK1VzMFBINXdGOWFrME1hK2VmdE11T3BVcC9lY0RNL0NLZWNGMnVk?=
+ =?utf-8?B?TjhGV3RMTXUwZW5mb2duTHY3UVZQVU9pY1NkeU1vVWdjc1NwN2ZHN2ZOVkdW?=
+ =?utf-8?B?QXJ5TU93bVY2cFk4U2Z0eU82ZHNtV1A3bjRXbFVWZnlENlYzRkJ3eFBaTUhw?=
+ =?utf-8?B?VkVYRmVVbXpYakpYdHM2VklFeTB3emhEcDlHbk96a0Y3QURVeWR0NUk2ZjJy?=
+ =?utf-8?B?RUgwUFpJNnI2NjkxelJMdjFPQldIM09lY0NEWTRaZFNRTURlL2pLS3ZXWTgw?=
+ =?utf-8?B?bDkremJlMVpVZXAvLzhIcGQ3ZmV6ckhoSnB3YjM4Yy9GRERJZWIzbEI5eHhm?=
+ =?utf-8?B?SGRlVHREUVVYWHhwQXhqck9nbXFueDlNTHJYQjZ5VklTdVoxeG5GcG9aUXlq?=
+ =?utf-8?B?ODBvL0NtdFEzZ0g2RW4vNFRHRnhhYUNhMmxEVUV4YmlsM0x4Ty85VFAzZGxQ?=
+ =?utf-8?B?Vko4ZEpEeHBlSS9YYTNKSlZHaXJGMTViS1ZFbk9qb2VNVzMvT0hJUzJtUDgz?=
+ =?utf-8?B?VVNNM0JJaExKVHFWSlN2Tmk1allmTytmQ1VON3FFeHYxazkrN3RRamJsYXhV?=
+ =?utf-8?B?c3BvckIzWERhcUFwNlpJQVNDWFVqNzRzVkJUcisxMDVLNDN6NVhKUTFRTnRs?=
+ =?utf-8?B?N25NM2xmNnBBK1VqdVcybXd6MkhyNElmVGprN1duYktaUHIrWWo0TUh2QkdD?=
+ =?utf-8?B?eUF6VDRITnppNUlkQkpUNVFWQm4rc2RGcEo4R05CeEFCSjdsK25jRHU1UytF?=
+ =?utf-8?B?ZE04TG9WdXBFYng1MHNvamRaV0lCL0xYQW1QMWF5c0pwVVFjY3FjQ0QzUGYz?=
+ =?utf-8?B?aXZmbHI1dHpocUpVWVY2YjNFS2dDanpqMGN5QjJHai83WDkrR1FMdThlQUZR?=
+ =?utf-8?Q?1JqGxxCXwyKlAEPZRmGyI4sRgDk8TJam+nlLaws0ciV0dUu?=
+MIME-Version: 1.0
+
+------=_Part_429563_1059237549.1748114047644
+Content-Type: multipart/related;
+	boundary="----=_Part_429564_925547470.1748114047644"
+
+------=_Part_429564_925547470.1748114047644
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<!doctype html><html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"u=
+rn:schemas-microsoft-com:office:office"><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8">
+      <title></title><style type=3D"text/css">body, table {
+  font-family: Verdana, Arial, sans-serif;
+  font-size: 12px; width:100%;
+}
+div {
+  padding-top:5px;
+  padding-bottom:5px;
+}
+img=20
+{
+  border:0px;
+}</style></head>
+   <body><div>Dear Ritam Mukherjee , <br><br>We acknowledge receipt of your=
+ resignation dated
+      28-04-2025 As per the official records of the company, your employmen=
+t will be terminated
+      effective from 27-05-2025 on the close of business hours. <br><br>You=
+r resignation
+      from the Company is subject to you returning the Company assets that =
+are still under
+      your possession and by paying back Company dues (joining bonus/asset =
+recovery/notice
+      period recovery), if any.<br><br>Please note that release of full and=
+ final settlement, sharing of your relieving letter
+      and response to the WMGTS employment background verification will be =
+subject to successful
+      completion of the exit formalities.<br><br>Yours sincerely,<br>For WM=
+ Global Technology Services India Pvt Ltd.<br><br>Akash Gupta<br>Director, =
+Total Rewards &amp; HR Operations <br><br>You may log into Workday until yo=
+ur
+      termination date to download a PDF of this Resignation Acceptance Let=
+ter. Should you
+      need a copy after your termination date, you may contact People Servi=
+ces between the
+      hours of 9:00 AM to 5:30 PM IST, Monday through Friday at 080 - 40358=
+282.</div><div><br></div><div>Business Process: Terminate: Ritam Mukherjee<=
+/div><div>Subject: Ritam Mukherjee</div><div>Details: Terminate for Ritam M=
+ukherjee effective on 27/05/2025</div><div><a href=3D"https://urldefense.co=
+m/v3/__https://wd5.myworkday.com/walmart/email-universal/inst/779$416019788=
+/rel-task/2997$4086.htmld__;!!IfjTnhH9!VaMNDWifOV4RYiGplS5Tau5x41jD1Cw4AnbU=
+9FTqhy0gCTTETKhTGbyEFAv2OIMVzfAsXUycrWTLRUl1jejdYzk7oA$">Click here to view=
+ the notification details.</a></div><div><br></div><div><img src=3D"cid:gvB=
+hwMTYYd"></div><div><br></div><div>This is an automated email - Please do n=
+ot respond.</div>
+      	     <div>
+      	    <!--[if mso | IE]>
+      	      <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"600" align=3D"center"
+      style=3D"width:600px;">
+      	        <tr>
+      	          <td style=3D"line-height:0px;font-size:0px;mso-line-height=
+-rule:exactly;">
+      	      <![endif]-->
+      	    <div style=3D"margin:0 auto;max-width:600px;">
+      	      <table cellpadding=3D"0" cellspacing=3D"0" style=3D"font-size:=
+0px;width:100%;" align=3D"center" border=3D"0">
+      	        <tbody>
+      	          <tr>
+      	            <td style=3D"text-align:center;vertical-align:top;font-s=
+ize:0px;padding:20px
+      0px;"></td>
+      	          </tr>
+      	        </tbody>
+      	      </table>
+      	    </div>
+      	    <!--[if mso | IE]>
+      	      </td></tr></table>
+      	      <![endif]-->
+      	    <!--[if mso | IE]>
+      	      <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"600" align=3D"center"
+      style=3D"width:600px;">
+      	        <tr>
+      	          <td style=3D"line-height:0px;font-size:0px;mso-line-height=
+-rule:exactly;">
+      	      <![endif]-->
+      	    <div style=3D"margin:0 auto;max-width:600px;">
+      	      <table cellpadding=3D"0" cellspacing=3D"0" style=3D"font-size:=
+0px;width:100%;" align=3D"center" border=3D"0">
+      	        <tbody>
+      	          <tr>
+      	            <td style=3D"text-align:center;vertical-align:top;font-s=
+ize:0px;padding:20px
+      0px;"></td>
+      	          </tr>
+      	        </tbody>
+      	      </table>
+      	    </div>
+      	    <!--[if mso | IE]>
+      	      </td></tr></table>
+      	      <![endif]-->
+     =20
+      <!--[if mso | IE]>
+	      <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"600=
+" align=3D"center" style=3D"width:600px;">
+	        <tr>
+	          <td style=3D"line-height:0px;font-size:0px;mso-line-height-rule:=
+exactly;">
+	      <![endif]-->
+      <div xmlns:wd=3D"urn:com.workday/bsvc" style=3D"margin:0 auto;max-wid=
+th:600px;">
+         <table cellpadding=3D"0" cellspacing=3D"0" style=3D"font-size:0px;=
+width:100%;" align=3D"center" border=3D"0">
+            <tbody>
+               <tr>
+                  <td style=3D"text-align:center;vertical-align:top;font-si=
+ze:0px;padding:20px 0px;">
+                     <!--[if mso | IE]>
+	 <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr><td style=3D"=
+vertical-align:top;width:600px;">
+	      <![endif]-->
+                     <div aria-labelledby=3D"mj-column-per-100" class=3D"mj=
+-column-per-100" style=3D"vertical-align:top;display:inline-block;font-size=
+:13px;text-align:left;width:100%;">
+                        <table cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" border=3D"0">
+                           <tbody>
+                              <tr>
+                                 <td style=3D"word-break:break-word;font-si=
+ze:0px;padding-bottom:0px;" align=3D"center">
+                                    <div style=3D"cursor:auto;color:#98a0a6=
+;font-family:Roboto;font-size:12px;font-weight:400;line-height:22px;">This =
+email was intended for Ritam.Mukherjee@walmart.com =C2=B7  <a href=3D"https=
+://urldefense.com/v3/__https://wd5.myworkday.com/walmart/d/task/2998$2725.h=
+tmld__;!!IfjTnhH9!VaMNDWifOV4RYiGplS5Tau5x41jD1Cw4AnbU9FTqhy0gCTTETKhTGbyEF=
+Av2OIMVzfAsXUycrWTLRUl1jeiBLnrEUA$" style=3D"color:#0067AC;text-decoration:=
+none;
+                                       	                                   =
+                     "> Manage Preferences </a>
+                                    </div>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td style=3D"word-break:break-word;font-si=
+ze:0px;padding-top:0px;" align=3D"center">
+                                    <div style=3D"cursor:auto;color:#98a0a6=
+;font-family:Roboto;font-size:12px;font-weight:400;">Walmart Inc. =C2=B7 <a=
+ href=3D"http://www.walmart.com">www.walmart.com</a></div>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!--[if mso | IE]>
+	      </td></tr></table>
+	      <![endif]-->
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+      <!--[if mso | IE]>
+	      </td></tr></table>
+	      <![endif]-->
+   </body>
+</html>=
+
+------=_Part_429564_925547470.1748114047644
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Disposition: inline; filename="logo.gif"
+Content-ID: <gvBhwMTYYd>
+Content-Description: logo.gif
+
+R0lGODlhdAAvAPcAABJFfhRIfxhGfRpJfQZGjgZIjg1GhQpGiglGjQ1GiQxGjA5IhwtIjAZGkAZI
+kQlGkAlIkRJGghFGixRIghJKihtLhBpNihJNkxhOkh9QhR1RixVUlx5SkSBOiyRRhCFSiSBRjiFW
+jSRSjSRXjytVjyxXiyhYjSNVkCVZkyRbnCpakjJZhzFdjDBdki9gji9glixhnzRgjT1jjDNilDRl
+mjdonjlklDlnmjxqnTRnozVoozxsoENojEJsnElvnUZwnExznVJ0nERuoERxo0ZzrEp0pEp2qk54
+pE14qkR0sFF3olF6pV1/pFeBp1aArl2BpluCq2GDp2WKrWqHp2uNrWOLsmmNtGuRtm2SuXOPrXOT
+s3SVuXWYunmXu3mYt36cu3OZwHyewn6jxe6VE+yUG/aPB/mPAvaRBfWSC/qRBPiSCPKTEvGVGfKY
+HOeXLuyVIuiXKu6YI+ybK+ycMvCZI/GdK+yhMO2iO+2oPPCgNPCkOfCoPeulQeyoROyrS+ytVe+z
+Vu2yW/CmQvCqRvCuUvGyVfC1Xu20Yuq6ZO26avC2YvO4ZPK9bPO9ce3BevLBdPPDe4edroSjvYul
+vIuovpGnupKtv6CvvYOfwISjwoKkyIqmw4yqw4ytzJCqwZCqxZCtwZCux5euwpSvxJSww5WxzJiz
+xZq0zJi4zpy10Zy506S1yKm9y6K806fA1qvD1qvE2bDH1rTG1LPH2rLI1rPJ3bnM3LvR3bvO4L3R
+4b7W6PTGgvTJhPXNivjOivXNkfXQjvbRkvbUmfjRlfjSmfjYnffZo/rao/ndrPrdsPrgrfvis/vm
+u/vpvsPU3sLV4sfa48Xc7M3b5cvc6dDf59De6c3g68zj89Th5dTk7djm7dro7tTl8Nfo8tnm8Nvq
+897t+fnnx/zqw/zsyf3v0v3wzv3y1f312/753ODq8eHr9ODt8+Hu9OXv8+Xv9eDt+eTw9eTx+Ovz
+9uv1+u35/P334/345P367PD19PD2+fH7/P378f///////wAAAAAAACH5BAEAAP0ALAAAAAB0AC8A
+AAj+APsJHEiwoMGDCBMq7Lev4b2H+xZKnEixosWLBu+dE5fsl6NEiEIievQLWThz9jCqXMkSo71x
+whLhoYOmppqbaW7WbHMn0K9mKVsKHcrynDFDddaYScPUzNI0T6FGLUOH0DBy94hq3YrQHDA+Y5w2
+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
+ASD4hKSpHShZiEIdEwkIAAA7
+
+------=_Part_429564_925547470.1748114047644--
+
+------=_Part_429563_1059237549.1748114047644--
